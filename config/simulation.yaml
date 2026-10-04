@@ -1,0 +1,7 @@
+simulation:
+  model_path: description/mjcf/two_wheel_robot.xml
+  timestep: 0.002
+  control_dt: 0.02
+  episode_seconds: 10.0
+  frame_skip: 10
+  render_mode: null

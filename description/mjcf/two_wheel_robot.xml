@@ -1,0 +1,227 @@
+<mujoco model="two_wheel_robot">
+  <compiler angle="radian" inertiafromgeom="false"/>
+
+  <option
+    timestep="0.002"
+    gravity="0 0 -9.81"
+    integrator="RK4"/>
+
+  <default>
+    <joint
+      damping="0.01"
+      frictionloss="0.01"/>
+
+    <geom
+      friction="1.0 0.01 0.001"
+      condim="3"/>
+
+    <motor
+      ctrllimited="true"
+      ctrlrange="-2 2"/>
+  </default>
+
+  <worldbody>
+    <light
+      name="overhead_light"
+      pos="0 0 3"/>
+
+    <geom
+      name="floor"
+      type="plane"
+      size="5 5 0.1"
+      rgba="0.8 0.8 0.8 1"/>
+
+    <!-- The body origin matches base_link after the fixed base_footprint offset. -->
+    <body
+      name="base_link"
+      pos="0 0 0.08">
+
+      <freejoint name="base_free_joint"/>
+
+      <inertial
+        pos="0 0 0.095"
+        mass="0.80"
+        diaginertia="0.0068067 0.0040333 0.0092267"/>
+
+      <!-- Lower plate -->
+      <geom
+        name="lower_plate"
+        type="box"
+        pos="0 0 0.045"
+        size="0.11 0.15 0.0025"
+        rgba="0.1 0.1 0.1 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Upper plate -->
+      <geom
+        name="upper_plate"
+        type="box"
+        pos="0 0 0.145"
+        size="0.11 0.15 0.0025"
+        rgba="0.1 0.1 0.1 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Front left standoff -->
+      <geom
+        name="front_left_standoff"
+        type="cylinder"
+        pos="0.09 0.12 0.095"
+        size="0.005 0.05"
+        rgba="0.85 0.70 0.20 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Front right standoff -->
+      <geom
+        name="front_right_standoff"
+        type="cylinder"
+        pos="0.09 -0.12 0.095"
+        size="0.005 0.05"
+        rgba="0.85 0.70 0.20 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Rear left standoff -->
+      <geom
+        name="rear_left_standoff"
+        type="cylinder"
+        pos="-0.09 0.12 0.095"
+        size="0.005 0.05"
+        rgba="0.85 0.70 0.20 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Rear right standoff -->
+      <geom
+        name="rear_right_standoff"
+        type="cylinder"
+        pos="-0.09 -0.12 0.095"
+        size="0.005 0.05"
+        rgba="0.85 0.70 0.20 1"
+        contype="0"
+        conaffinity="0"/>
+
+      <!-- Collision geometry from the URDF base_link. -->
+      <geom
+        name="base_link_collision"
+        type="box"
+        pos="0 0 0.095"
+        size="0.11 0.15 0.055"
+        rgba="0 0 0 0"
+        contype="1"
+        conaffinity="1"/>
+
+      <body
+        name="left_wheel"
+        pos="0 0.165 0">
+
+        <joint
+          name="left_wheel_joint"
+          type="hinge"
+          axis="0 1 0"
+          damping="0.01"
+          frictionloss="0.01"/>
+
+        <inertial
+          pos="0 0 0"
+          mass="0.5"
+          diaginertia="0.0008375 0.0016000 0.0008375"/>
+
+        <geom
+          name="left_wheel_geom"
+          type="cylinder"
+          size="0.08 0.015"
+          quat="0.70710678 0.70710678 0 0"
+          rgba="0.1 0.1 0.1 1"/>
+      </body>
+
+      <body
+        name="right_wheel"
+        pos="0 -0.165 0">
+
+        <joint
+          name="right_wheel_joint"
+          type="hinge"
+          axis="0 1 0"
+          damping="0.01"
+          frictionloss="0.01"/>
+
+        <inertial
+          pos="0 0 0"
+          mass="0.5"
+          diaginertia="0.0008375 0.0016000 0.0008375"/>
+
+        <geom
+          name="right_wheel_geom"
+          type="cylinder"
+          size="0.08 0.015"
+          quat="0.70710678 0.70710678 0 0"
+          rgba="0.1 0.1 0.1 1"/>
+      </body>
+
+      <!-- The IMU is fixed at the base_link origin as defined in the URDF. -->
+      <body
+        name="imu_link"
+        pos="0 0 0">
+
+        <inertial
+          pos="0 0 0"
+          mass="0.01"
+          diaginertia="0.0000007708 0.0000003542 0.0000010833"/>
+
+        <site
+          name="imu_site"
+          pos="0 0 0"
+          size="0.005"
+          rgba="1 0 0 0"/>
+      </body>
+    </body>
+  </worldbody>
+
+  <actuator>
+    <motor
+      name="left_motor"
+      joint="left_wheel_joint"
+      gear="1"/>
+
+    <motor
+      name="right_motor"
+      joint="right_wheel_joint"
+      gear="1"/>
+  </actuator>
+
+  <sensor>
+    <gyro
+      name="imu_gyro"
+      site="imu_site"
+      noise="0.001"/>
+
+    <accelerometer
+      name="imu_accelerometer"
+      site="imu_site"
+      noise="0.01"/>
+
+    <jointpos
+      name="left_wheel_position"
+      joint="left_wheel_joint"/>
+
+    <jointpos
+      name="right_wheel_position"
+      joint="right_wheel_joint"/>
+
+    <jointvel
+      name="left_wheel_velocity"
+      joint="left_wheel_joint"/>
+
+    <jointvel
+      name="right_wheel_velocity"
+      joint="right_wheel_joint"/>
+
+    <framequat
+      name="base_orientation"
+      objtype="body"
+      objname="base_link"/>
+  </sensor>
+</mujoco>

@@ -1,0 +1,16 @@
+mpc:
+  dt: 0.02
+  horizon: 20
+  q_pitch: 100.0
+  q_pitch_rate: 5.0
+  q_position: 1.0
+  q_velocity: 1.0
+  r_input: 0.1
+  output_limit: 2.0
+  parameter_bounds:
+    horizon: [10, 40]
+    q_pitch: [10.0, 500.0]
+    q_pitch_rate: [0.1, 50.0]
+    q_position: [0.0, 20.0]
+    q_velocity: [0.0, 20.0]
+    r_input: [0.001, 10.0]

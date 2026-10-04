@@ -1,0 +1,16 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+logs/*
+models/**/*.zip
+models/**/*.pkl
+results/**/*.csv
+results/**/*.json
+results/**/*.png
+!logs/.gitkeep
+!models/**/.gitkeep
+!results/**/.gitkeep
+*.egg-info/
