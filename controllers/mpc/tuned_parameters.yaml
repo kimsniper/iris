@@ -1,0 +1,10 @@
+mpc:
+  dt: 0.02
+  horizon: 15
+  q_pitch: 500.0
+  q_pitch_rate: 1.0
+  q_position: 500.0
+  q_velocity: 250.0
+  r_input: 0.01
+  output_limit: 0.5
+  source: manual_baseline

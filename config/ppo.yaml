@@ -1,0 +1,19 @@
+ppo:
+  policy: MlpPolicy
+  learning_rate: 0.0003
+  n_steps: 2048
+  batch_size: 64
+  n_epochs: 10
+  gamma: 0.99
+  gae_lambda: 0.95
+  clip_range: 0.2
+  ent_coef: 0.0
+  vf_coef: 0.5
+  max_grad_norm: 0.5
+  torque_limit: 0.5
+  policy_kwargs:
+    net_arch: [64, 64]
+  seeds: [0, 1, 2]
+  checkpoint_frequency: 50000
+  evaluation_frequency: 10000
+  evaluation_seeds: [9001, 9002, 9003, 9004, 9005]
