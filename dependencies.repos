@@ -1,0 +1,5 @@
+repositories:
+  rift:
+    type: git
+    url: git@github.com:kimsniper/rift.git
+    version: main

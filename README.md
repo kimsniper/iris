@@ -5,6 +5,9 @@
 IRIS is a research platform for developing and evaluating classical,
 model-based, and learning-based control for self-balancing robots.
 
+IRIS is built on [RIFT](https://github.com/kimsniper/rift), a reusable
+robotics and Physical AI platform.
+
 The implementation uses MuJoCo, Gymnasium, and Stable-Baselines3 to
 compare three controller approaches for a two-wheel self-balancing
 robot:
@@ -19,7 +22,39 @@ controller loads a qualified policy at runtime.
 
 ## Setup
 
+Install Git and `vcstool`, then create the workspace:
+
 ```bash
+python3 -m pip install vcstool
+mkdir -p ~/iris_rift_ws
+cd ~/iris_rift_ws
+```
+
+Clone IRIS:
+
+```bash
+git clone git@github.com:kimsniper/iris.git
+```
+
+Import the repositories declared by IRIS:
+
+```bash
+vcs import . < iris/dependencies.repos
+```
+
+The resulting workspace is:
+
+```text
+~/iris_rift_ws/
+├── iris/
+│   └── .venv/
+└── rift/
+```
+
+Create the IRIS environment and install the application dependencies:
+
+```bash
+cd ~/iris_rift_ws/iris
 ./install_dependencies.sh
 source activate.sh
 ```
@@ -33,24 +68,49 @@ PYTEST_DISABLE_PLUGIN_AUTOLOAD=1 python -m pytest -q tests
 
 ## Visualize controllers
 
+### PID
+
 ```bash
 python scripts/view_pid.py
+```
+
+### MPC
+
+```bash
 python scripts/view_mpc.py
+```
+
+### PPO
+
+```bash
 python scripts/view_ppo.py \
   --model models/direct_control/best_model.zip
 ```
 
 ## Evaluate controllers
 
+### PID
+
 ```bash
 python scripts/evaluate_pid.py
+```
+
+PID results are written under `results/pid/`.
+
+### MPC
+
+```bash
 python scripts/evaluate_mpc.py
+```
+
+MPC results are written under `results/mpc/`.
+
+### PPO
+
+```bash
 python rl/direct_control/evaluate.py \
   --model models/direct_control/best_model.zip
 ```
-
-PID results are written under `results/pid/`. MPC results are written
-under `results/mpc/`.
 
 ## Train direct PPO
 
@@ -59,3 +119,17 @@ python rl/direct_control/train.py \
   --total-timesteps 200000 \
   --seed 0
 ```
+
+Training outputs are written under `models/direct_control/` and
+`logs/direct_control/`.
+
+## MPC system identification
+
+```bash
+python scripts/identify_mpc_dynamics.py
+python scripts/validate_mpc_multistep.py
+```
+
+## License
+
+IRIS is licensed under the Apache License 2.0. See `LICENSE` for details.
