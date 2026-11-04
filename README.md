@@ -22,42 +22,22 @@ controller loads a qualified policy at runtime.
 
 ## Setup
 
-Install Git and `vcstool`, then create the workspace:
-
-```bash
-python3 -m pip install vcstool
-mkdir -p ~/iris_rift_ws
-cd ~/iris_rift_ws
-```
-
 Clone IRIS:
 
 ```bash
 git clone git@github.com:kimsniper/iris.git
+cd iris
 ```
 
-Import the repositories declared by IRIS:
+Create the project environment and install the dependencies:
 
 ```bash
-vcs import . < iris/dependencies.repos
-```
-
-The resulting workspace is:
-
-```text
-~/iris_rift_ws/
-├── iris/
-│   └── .venv/
-└── rift/
-```
-
-Create the IRIS environment and install the application dependencies:
-
-```bash
-cd ~/iris_rift_ws/iris
 ./install_dependencies.sh
 source activate.sh
 ```
+
+The installer creates `.venv/` inside the IRIS repository and installs
+RIFT and the other required packages into that environment.
 
 ## Validate
 
